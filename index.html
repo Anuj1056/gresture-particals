@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+  <title>Gesture Particle System</title>
+
+  <!-- PWA (optional on PC, useful later for mobile install) -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    canvas {
+      display: block;
+    }
+    .input_video {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      width: 200px;
+      transform: scaleX(-1); /* mirror preview */
+      opacity: 0.5;
+      pointer-events: none;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .message {
+      position: fixed;
+      left: 10px;
+      bottom: 10px;
+      color: #fff;
+      font-size: 13px;
+      background: rgba(0,0,0,0.4);
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <video class="input_video" autoplay playsinline></video>
+  <div class="message">
+    Allow camera. Move hand to control particles. Fingers change shape.
+  </div>
+
+  <!-- Three.js -->
+  <script src="https://unpkg.com/three@0.165.0/build/three.min.js"></script>
+
+  <!-- MediaPipe Hands (legacy browser API) -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+  <!-- Main app code -->
+  <script type="module" src="./main.js"></script>
+
+  <!-- Service worker register (for PWA; safe to keep) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
